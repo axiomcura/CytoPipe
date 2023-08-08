@@ -29,12 +29,7 @@ def init_cp_data(data_fp: Union[list[str], str], metadata_fp: str, barcode_fp: s
             "please make sure to provide data plates, barcode and metadata"
         )
 
-    # setting up paths
-    # -- barcode
-    barcode_path_obj = barcode_fp
-    if barcode_fp is not None:
-        barcode_path_obj = Path(barcode_fp)
-
+    barcode_path_obj = Path(barcode_fp) if barcode_fp is not None else barcode_fp
     # -- metadata_path
     metadata_path_obj = Path(metadata_fp)
 

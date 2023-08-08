@@ -188,9 +188,7 @@ class CliControlPanel:
             default="cell_profiler",
             help="datatype used for processing",
         )
-        args = parser.parse_args(params)
-
-        return args
+        return parser.parse_args(params)
 
     def parse_workflow_args(self) -> argparse.Namespace:
         """Wrapper for parsing workflow parameters
@@ -200,8 +198,7 @@ class CliControlPanel:
         argparse.Namespace
             returns parsed parameters based on workflow
         """
-        args = self.__workflow_args_parser()
-        return args
+        return self.__workflow_args_parser()
 
     # ----------------------------------------
     # Private formatting functions
@@ -231,7 +228,7 @@ class CliControlPanel:
         # ------------------------------
         # checking the modes parameters
         # ------------------------------
-        if not len(self.param_list) > 1:
+        if len(self.param_list) <= 1:
             raise InvalidArgumentException(
                 "No mode has been provided, please enter a mode"
             )
@@ -255,15 +252,15 @@ class CliControlPanel:
         # checking for mode help
         try:
             mode_help = self.param_list[2]
-            if mode == "init" and mode_help == "help":
+            if (
+                mode == "init"
+                and mode_help == "help"
+                or mode == "run"
+                and mode_help == "help"
+            ):
                 self.__check_extra_help_args(help_flag_pos=2)
                 self.mode_help = True
 
-            elif mode == "run" and mode_help == "help":
-                self.__check_extra_help_args(help_flag_pos=2)
-                self.mode_help = True
-
-        # indicates that the user only placed a mode
         except IndexError:
             self.mode_help = False
             self.workflow = False
@@ -331,9 +328,7 @@ class CliControlPanel:
             required=False,
             help="Force run the entire workflow",
         )
-        args = parser.parse_args(params)
-
-        return args
+        return parser.parse_args(params)
 
     def __check_extra_help_args(self, help_flag_pos):
         """Checks arguemnts are help flag

@@ -80,8 +80,7 @@ def sort_log_files(log_paths: list[str]) -> list[str]:
     file_time_df = pd.DataFrame(file_time, columns=["time_created", "path"])
     file_time_df["time_created"] = pd.to_datetime(file_time_df["time_created"])
     file_time_df = file_time_df.sort_values("time_created", ascending=True)
-    sorted_paths = file_time_df["path"].tolist()
-    return sorted_paths
+    return file_time_df["path"].tolist()
 
 
 def combine_logs(logs: list[str], outname: str) -> None:
