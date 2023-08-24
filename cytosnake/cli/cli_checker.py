@@ -128,20 +128,18 @@ def _check_mode_help_arg(args_list: list[Union[str, int, bool]]) -> None:
         print(cli_docs)
         sys.exit(0)
 
-    # display mode help documentation and exit
-    if len(args_list) == 2:
-        mode_help = args_list[1]
-        if mode_help == "help":
-            match mode_opt.lower():
-                case "init":
-                    print(init_doc)
-                    sys.exit(0)
-                case "run":
-                    print(run_doc)
-                    sys.exit(0)
-                case "test":
-                    raise NotImplementedError("Documentation is not implemented yet")
-                case _:
-                    raise RuntimeError("Unexpected Error")
-    else:
+    if len(args_list) != 2:
         return
+    mode_help = args_list[1]
+    if mode_help == "help":
+        match mode_opt.lower():
+            case "init":
+                print(init_doc)
+                sys.exit(0)
+            case "run":
+                print(run_doc)
+                sys.exit(0)
+            case "test":
+                raise NotImplementedError("Documentation is not implemented yet")
+            case _:
+                raise RuntimeError("Unexpected Error")
